@@ -2,14 +2,15 @@
 {% block title %}Записи сообщества {{ group }}{% endblock %}
 {% block header %}Записи сообщества {{ group }}{% endblock %}
 {% block content %}
-    <h1>{{ group }}</h1>
+
+    <h3>{{ group }}</h3>
     <p>
         {{ group.description }}
     </p>
     {% for post in posts %}
-    <h3>
+    <h5>
         Автор: {{ post.author.get_full_name }}, дата публикации: {{ post.pub_date|date:"d M Y" }}
-    </h3>
+    </h5>
     <p>{{ post.text|linebreaksbr }}</p>
     <hr>
     {% endfor %}
