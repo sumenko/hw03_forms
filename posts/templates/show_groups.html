@@ -6,6 +6,7 @@
 <div class="list-group">
     {% for group in groups %}
         <a class="list-group-item list-group-item-action" href="{{ group.slug }}">{{ group.title }}</a>
-    {% endfor %}
+        {% endfor %}
+        <a class="list-group-item list-group-item-action" href="{% url 'index' %}">Посмотртеть всё</a>
 </div>
 {% endblock %} 
