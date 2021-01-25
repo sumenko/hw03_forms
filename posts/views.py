@@ -22,28 +22,18 @@ def group_posts(request, slug=None):
 
 def show_groups(request):
     """ Показывает страницу со списком всех сообществ """
-    groups = [
-                {"title": group.title, "slug": group.slug}
-                for group in Group.objects.all()
-             ]
-    # ссылка в корень
-    groups.insert(0, {"slug": "/", "title": "Посмотреть всё"})
+    groups = Group.objects.all()[:10]
     return render(request, "show_groups.html", {"groups": groups})
 
 
 @login_required
 def new_post(request):
     """  Создать новый пост"""
-    if request.POST:
-        form = PostForm(request.POST)
-        if form.is_valid():
-            # Пользователь хранится в request.username
-            # Данные формы после валидации лежат в form.cleaned_data['']
-            post = Post(author=request.user,
-                        text=form.cleaned_data['text'],
-                        group=form.cleaned_data['group'])
-            post.save()
-            return redirect(reverse_lazy("index"))
-    else:
-        form = PostForm()
-    return render(request, "new_post.html", {"form": form})
+    form = PostForm(request.POST or None)
+    if request.GET or not form.is_valid():
+        return render(request, "new_post.html", {"form": form})
+
+    post = form.save(commit=False)
+    post.author = request.user
+    post.save()
+    return redirect(reverse_lazy("index"))

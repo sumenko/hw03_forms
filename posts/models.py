@@ -4,8 +4,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-""" Модели должны быть зарегистрированы в admin.py """
-
 
 class Post(models.Model):
     """ описание поста """
@@ -26,7 +24,7 @@ class Post(models.Model):
         ordering = ["-pub_date"]
 
     def __str__(self):
-        return self.text
+        return f"#{self.pk}"
 
 
 class Group(models.Model):
