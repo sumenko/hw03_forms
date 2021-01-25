@@ -37,5 +37,5 @@ def new_post(request):
     post = form.save(commit=False)
     post.author = request.user
     post.save()
-    
+
     return redirect(reverse_lazy("index"))
